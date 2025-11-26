@@ -12,7 +12,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   backend:
-    build: ./back 
+    build: ./backOticVidaCamara
     ports:
       - "3000:3000"
     environment:
@@ -24,7 +24,7 @@ services:
 
   frontend:
     build:
-      context: ./front
+      context: ./frontOticVidaCamara
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
