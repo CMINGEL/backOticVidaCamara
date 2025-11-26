@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16     
+    restart: always
+    environment:
+      POSTGRES_USER: postgres     
+      POSTGRES_PASSWORD: otic
+      POSTGRES_DB: otic_db
+    ports:
+      - "5432:5432"       
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: ./back 
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:otic@db:5432/otic_db
+    depends_on:
+      - db                 
+    # volumes:
+    #   - ./backend:/app    
+
+  frontend:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
